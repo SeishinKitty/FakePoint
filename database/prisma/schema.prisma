@@ -11,14 +11,14 @@ datasource db {
 }
 
 model listItem {
-  Id      String     @id @default(uuid())
-  Title   String
-  Related listRelatedItem[]
+  id      String     @id @default(uuid())
+  title   String
+  related listRelatedItem[]
 }
 
 model listRelatedItem {
-  Id      String     @id @default(uuid())
-  Title   String
-  Related listItem? @relation(fields: [RelatedId], references: [Id])
-  RelatedId String?
+  id      String     @id @default(uuid())
+  title   String
+  related listItem? @relation(fields: [relatedId], references: [id])
+  relatedId String?
 }
