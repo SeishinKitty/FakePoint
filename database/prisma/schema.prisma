@@ -10,15 +10,15 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-model listItem {
+model ListItem {
   id      String     @id @default(uuid())
   title   String
-  related listRelatedItem[]
+  related ListRelatedItem[]
 }
 
-model listRelatedItem {
+model ListRelatedItem {
   id      String     @id @default(uuid())
   title   String
-  related listItem? @relation(fields: [relatedId], references: [id])
+  related ListItem? @relation(fields: [relatedId], references: [id])
   relatedId String?
 }
