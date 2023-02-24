@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const ListItem: FC<IListItem> = ({id, title, related}) => {
   return (
-    <tr><td>{id}</td><td><Link to={`/List/${id}`}>{title}</Link></td><td>{related.map((rel) => <li className="related-link" key={rel.id}><Link  to={`/ListRelated/${rel.id}`}>{rel.title}</Link></li>)}</td></tr>
+    <tr><td>{id}</td><td><Link to={`/List/${id}`}>{title}</Link></td><td>{related.map((rel) => <div className="related-link" key={rel.id}><Link  to={`/ListRelated/${rel.id}`}>{rel.title}</Link></div>)}</td></tr>
   )
 }
 

@@ -17,21 +17,13 @@ const ListView = () => {
     })
   }, [id])
 
-  if(!listitem){
-    return (
-      <div>
-        <h1>404</h1>
-      </div>
-    )
-  }
-
   return (
     <div>
       <div>
-        Title: {listitem.title}
+        Title: {listitem?.title}
       </div>
       <div>
-        Related: {listitem.related.map((rel) => <li className="related-link" key={rel.id}><Link to={`/ListRelated/${rel.id}`}>{rel.title}</Link></li>)}
+        Related: {listitem?.related.map((rel) => <div className="related-link" key={rel.id}><Link to={`/ListRelated/${rel.id}`}>{rel.title}</Link></div>)}
       </div>
     </div>
   )

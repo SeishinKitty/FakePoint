@@ -17,21 +17,13 @@ const ListRelatedView = () => {
     })
   }, [id])
 
-  if(!listRelatedItem){
-    return (
-      <div>
-        <h1>404</h1>
-      </div>
-    )
-  }
-
   return (
     <div>
       <div>
-        Title: {listRelatedItem.title}
+        Title: {listRelatedItem?.title}
       </div>
       <div>
-        Related: <Link to={`/List/${listRelatedItem.related?.id}`}>{listRelatedItem.related?.title}</Link>
+        Related: <Link to={`/List/${listRelatedItem?.related?.id}`}>{listRelatedItem?.related?.title}</Link>
       </div>
     </div>
   )
