@@ -1,10 +1,12 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
+import cors from 'cors'
 import express, {Express, Request, Response} from "express"
 import { title } from 'process'
 
 const prisma = new PrismaClient()
 const app: Express = express()
+app.use(cors())
 
 export interface TBRequest<T> extends Express.Request { body: T }
 export interface TPRequest<T> extends Express.Request { params: T }
@@ -21,6 +23,9 @@ app.get("/ListItem/:id", async (req: TPRequest<{ id: string }>, res: Response) =
       where: {
         id: req.params.id,
       },
+      include: {
+        related: true
+      }
     })
     res.json(result)
   }
@@ -37,6 +42,9 @@ app.get("/ListItem", async (req: TBRequest<{ id?: string, title?: string }>, res
       where: {
         ...(req.body.id ? {id: req.body.id} : {}),
         ...(req.body.title ? {title: req.body.title} : {})
+      },
+      include: {
+        related: true
       }
     })
     res.json(result)
@@ -141,6 +149,9 @@ app.get("/ListRelatedItem/:id", async (req: TPRequest<{ id: string }>, res: Resp
       where: {
         id: req.params.id,
       },
+      include: {
+        related: true
+      }
     })
     res.json(result)
   }
@@ -158,6 +169,9 @@ app.get("/ListRelatedItem", async (req: TBRequest<{ id?: string, title?: string,
         ...(req.body.id ? {id: req.body.id} : {}),
         ...(req.body.title ? {title: req.body.title} : {}),
         ...(req.body.relatedId ? {relatedId: req.body.relatedId} : {})
+      },
+      include: {
+        related: true
       }
     })
     res.json(result)
