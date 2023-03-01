@@ -23,7 +23,6 @@ html, body, div#root {
 .ribbon {
   grid-area: ribbon;
   border-bottom: 1px solid rgb(230, 230, 230);
-  padding-left: 0.5rem;
 }
 
 .nav {
@@ -109,7 +108,92 @@ html, body, div#root {
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
-.related-link{
+.related-link {
   display: inline;
   margin-right: 0.2rem;
+}
+
+.list-ribbon {
+  border-bottom: 1px solid rgb(230, 230, 230);
+  height: 3rem;
+  width: 100%;
+}
+
+.new-button {
+  background-color: rgb(160, 40, 40);
+  color: rgb(255, 255, 255);
+  padding: 0.5rem 0.7rem;
+  margin: 0.5rem;
+  border: none;
+  border-radius: 3px;
+}
+
+.new-button:hover {
+  background-color: rgb(140, 30, 30);
+  cursor: pointer;
+}
+
+.list-ribbon-button {
+  background-color: rgb(255, 255, 255);
+  padding: 0.5rem 0.7rem;
+  margin: 0.5rem;
+  border: none;
+  border-radius: 3px;
+}
+
+.list-ribbon-button:hover {
+  background-color: rgb(230, 230, 230);
+  cursor: pointer;
+}
+
+.list-view-table{
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0 2rem;
+}
+
+.list-view-row{
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.list-view-row:hover{
+  background-color: rgb(230, 230, 230);
+}
+
+.list-view-head{
+  font-weight: bold;
+}
+
+.list-view-cell{
+  padding: 0.2rem;
+}
+
+.list-view-check{
+  display: block;
+  border-radius: 10px;
+  border: 1px solid rgb(200, 200, 200);
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
+  width: 1rem;
+  height: 1rem;
+  margin: 0.3rem;
+  font-size: x-small;
+  padding-left: 0.1rem;
+}
+
+.list-view-check:hover{
+  color: rgb(200, 200, 200);
+  cursor: pointer;
+}
+
+.checked{
+  border: 1px solid rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+  background-color: rgb(140, 30, 30);
+  opacity: 1;
 }
