@@ -109,7 +109,7 @@ html, body, div#root {
 }
 
 .related-link {
-  display: inline;
+  float: left;
   margin-right: 0.2rem;
 }
 

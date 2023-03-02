@@ -1,20 +1,61 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { IListItem } from "../interfaces/ListInterfaces";
 import { Link } from "react-router-dom";
 
-const ListItem: FC<IListItem> = ({id, title, related}) => {
+interface IItemProps {
+  widths: string[]
+  item: IListItem
+  listChecked: {[id: string]:boolean}
+  setChecked: Dispatch<SetStateAction<{ [id: string]: boolean }>>
+}
+
+const ListItem: FC<IItemProps> = ({widths, item, listChecked, setChecked}) => {
+  useEffect(() => {
+    if (listChecked[item.id] === undefined) {setChecked({...listChecked, [item.id]: false})}
+  }, [item.id, listChecked, setChecked])
   return (
-    <tr className="list-view-row">
-      <td className="list-view-cell">{id}</td>
-      <td className="list-view-cell"><Link to={`/List/${id}`}>{title}</Link></td>
-      <td className="list-view-cell">{related.map((rel) => <div className="related-link" key={rel.id}><Link  to={`/ListRelated/${rel.id}`}>{rel.title}</Link></div>)}</td>
-    </tr>
+    <div className="list-view-row">
+      <div style={{width: widths[0]}}>
+        <i className={`list-view-check ${listChecked[item.id] ? "checked" : ""}`} onClick={() => {setChecked({...listChecked, [item.id]: !listChecked[item.id]})}}>✓</i>
+      </div>
+      <div className="list-view-cell" style={{width: widths[1]}}>{item.id}</div>
+      <div className="list-view-cell" style={{width: widths[2]}}><Link to={`/List/${item.id}`}>{item.title}</Link></div>
+      <div className="list-view-cell" style={{width: widths[3]}}>{item.related.map((rel) => <div className="related-link" key={rel.id}><Link  to={`/ListRelated/${rel.id}`}>{rel.title}</Link></div>)}</div>
+    </div>
   )
+}
+
+const AllSelected = (listChecked: {[id: string]:boolean}) => {
+  for (let id in listChecked){
+    if (!listChecked[id]) return false
+  }
+  return true
+}
+
+const SelectAll = (listChecked: {[id: string]:boolean}, setChecked: Dispatch<SetStateAction<{ [id: string]: boolean }>>) => {
+  let tmp = listChecked
+  for (let id in listChecked){
+    tmp[id] = true
+  }
+  for (let id in tmp){
+    setChecked({...listChecked, [id]: true})
+  }
+}
+
+const DeselectAll = (listChecked: {[id: string]:boolean}, setChecked: Dispatch<SetStateAction<{ [id: string]: boolean }>>) => {
+  let tmp = listChecked
+  for (let id in listChecked){
+    tmp[id] = false
+  }
+  for (let id in tmp){
+    setChecked({...listChecked, [id]: false})
+  }
 }
 
 const List = () => {
   const [listItems, setListItems] = useState<IListItem[]>([]);
+  const [listChecked, setChecked] = useState<{[id: string]:boolean}>({});
 
   useEffect(() => {
     axios({
@@ -26,6 +67,8 @@ const List = () => {
     })
   }, [])
 
+  const widths: string[] = ["1.6rem", "20rem", "10rem", "20rem"]
+
   return (
     <div>
       <div className="list-ribbon">
@@ -34,18 +77,17 @@ const List = () => {
         <button className="list-ribbon-button">Action 2</button>
       </div>
       <h1>List</h1>
-      <table className="list-view-table">
-        <thead className="list-view-head">
-          <tr className="list-view-row">
-            <td className="list-view-cell">Id</td>
-            <td className="list-view-cell">Title</td>
-            <td className="list-view-cell">Related</td>
-          </tr>
-        </thead>
-        <tbody>
-          { listItems.map((listItem) => <ListItem key={listItem.id} id={listItem.id} title={listItem.title} related={listItem.related} />) }
-        </tbody>
-      </table>
+      <div className="list-view-table">
+        <div className="list-view-row list-view-head">
+          <div style={{width: widths[0]}}>
+            <i className={`list-view-check ${AllSelected(listChecked) ? "checked" : ""}`} onClick={(e) => {AllSelected(listChecked) ? DeselectAll(listChecked, setChecked) : SelectAll(listChecked, setChecked)}}>✓</i>
+          </div>
+          <div className="list-view-cell" style={{width: widths[1]}}>Id</div>
+          <div className="list-view-cell" style={{width: widths[2]}}>Title</div>
+          <div className="list-view-cell" style={{width: widths[3]}}>Related</div>
+        </div>
+        { listItems.map((listItem) => <ListItem key={listItem.id} widths={widths} item={listItem} listChecked={listChecked} setChecked={setChecked} />) }
+      </div>
     </div>
   )
 };

@@ -19,9 +19,9 @@ const ListItem: FC<IItemProps> = ({widths, item, listChecked, setChecked}) => {
       <div style={{width: widths[0]}}>
         <i className={`list-view-check ${listChecked[item.id] ? "checked" : ""}`} onClick={() => {setChecked({...listChecked, [item.id]: !listChecked[item.id]})}}>✓</i>
       </div>
-      <div className="list-view-cell" style={{minWidth: widths[1]}}>{item.id}</div>
-      <div className="list-view-cell" style={{minWidth: widths[2]}}><Link to={`/ListRelated/${item.id}`}>{item.title}</Link></div>
-      <div className="list-view-cell" style={{minWidth: widths[3]}}><Link to={`/List/${item.related?.id}`}>{item.related?.title}</Link></div>
+      <div className="list-view-cell" style={{width: widths[1]}}>{item.id}</div>
+      <div className="list-view-cell" style={{width: widths[2]}}><Link to={`/ListRelated/${item.id}`}>{item.title}</Link></div>
+      <div className="list-view-cell" style={{width: widths[3]}}><Link to={`/List/${item.related?.id}`}>{item.related?.title}</Link></div>
     </div>
   )
 }
@@ -83,9 +83,9 @@ const ListRelated = () => {
           <div style={{width: widths[0]}}>
             <i className={`list-view-check ${AllSelected(listChecked) ? "checked" : ""}`} onClick={(e) => {AllSelected(listChecked) ? DeselectAll(listChecked, setChecked) : SelectAll(listChecked, setChecked)}}>✓</i>
           </div>
-          <div className="list-view-cell" style={{minWidth: widths[1]}}>Id</div>
-          <div className="list-view-cell" style={{minWidth: widths[2]}}>Title</div>
-          <div className="list-view-cell" style={{minWidth: widths[3]}}>Related</div>
+          <div className="list-view-cell" style={{width: widths[1]}}>Id</div>
+          <div className="list-view-cell" style={{width: widths[2]}}>Title</div>
+          <div className="list-view-cell" style={{width: widths[3]}}>Related</div>
         </div>
         { listItems.map((listItem) => <ListItem key={listItem.id} widths={widths} item={listItem} listChecked={listChecked} setChecked={setChecked} />) }
       </div>
